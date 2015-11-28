@@ -9,11 +9,13 @@ import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.api.BaseVariantOutput
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.logging.Logger
 
 class S3ApkUploadTask extends DefaultTask {
 
   ApplicationVariant variant
   S3ApkUploadExtension extension
+  Logger logger
 
   @TaskAction
   s3UploadApk() {
@@ -26,12 +28,12 @@ class S3ApkUploadTask extends DefaultTask {
     if (!bucketName || bucketName.isEmpty()) {
       throw new S3ApkUploadException("s3ApkUpload.bucketName cannot be empty or null")
     }
-
-    if (extension.path.length() > 0) {
-      extension.path = extension.path + "/"
+    final def targetPath = extension.path
+    if (targetPath.length() > 0 && !targetPath.endsWith("/")) {
+      targetPath = extension.path + "/"
     }
 
-    final def objectKey = "${extension.path}${apkFile.name}"
+    final def objectKey = "${targetPath}${apkFile.name}"
 
     final def putObjectReq = new PutObjectRequest(bucketName, objectKey, apkFile)
 
