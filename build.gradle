@@ -1,24 +1,25 @@
 buildscript  {
   ext {
     aws_sdk_version = '1.10.37'
+    kotlin_version = '1.0.0-beta-2423'
   }
   repositories {
     jcenter()
   }
   dependencies {
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
-
-// Apply the java plugin to add support for Java
 apply plugin: 'groovy'
+apply plugin: 'kotlin'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = "id.kulina.gradle"
-version = "1.0.1"
+version = "2.0-SNAPSHOT"
 
 publishing {
   publications {
@@ -26,7 +27,7 @@ publishing {
       from components.java
       groupId 'id.kulina.gradle'
       artifactId 'kulina-gradle-s3-plugin'
-      version '1.0.1'
+      version '2.0-SNAPSHOT'
     }
   }
 }
@@ -47,7 +48,7 @@ bintray {
     vcsUrl = "https://github.com/KulinaID/kulina-s3-gradle-plugin.git"
 
     version {
-      name = "1.0.1"
+      name = "2.0-SNAPSHOT"
       gpg {
         sign = true
         passphrase = System.getenv("BINTRAY_GPG_PASSWORD")
@@ -61,10 +62,18 @@ repositories {
   jcenter()
 }
 
+// Kotlin SourceSets
+sourceSets {
+  main.java.srcDirs += "src/main/kotlin"
+  test.java.srcDirs += "src/test/kotlin"
+}
+
+
 // In this section you declare the dependencies for your production and test code
 dependencies {
   compile localGroovy()
   compile gradleApi()
-  compile 'com.android.tools.build:gradle:1.5.0'
+  compile "com.android.tools.build:gradle:1.5.0"
   compile "com.amazonaws:aws-java-sdk-s3:$aws_sdk_version"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
