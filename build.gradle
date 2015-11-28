@@ -1,0 +1,70 @@
+buildscript  {
+  ext {
+    aws_sdk_version = '1.10.37'
+  }
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+  }
+}
+
+
+// Apply the java plugin to add support for Java
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+group = "id.kulina.gradle"
+version = "1.0"
+
+publishing {
+  publications {
+    KulinaPublication(MavenPublication) {
+      from components.java
+      groupId 'id.kulina.gradle'
+      artifactId 'kulina-gradle-s3-plugin'
+      version '1.0'
+    }
+  }
+}
+
+bintray {
+  user = System.getenv("BINTRAY_USER")
+  key  = System.getenv("BINTRAY_KEY")
+
+  publications = ['KulinaPublication']
+
+  publish = true
+
+  pkg {
+    repo = 'maven'
+    name = 'kulina-gradle-s3-plugin'
+    userOrg = 'kulina'
+    licenses = ['MIT']
+    vcsUrl = "https://github.com/KulinaID/kulina-s3-gradle-plugin.git"
+
+    version {
+      name = "1.0"
+      gpg {
+        sign = true
+        passphrase = System.getenv("BINTRAY_GPG_PASSWORD")
+      }
+    }
+  }
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+  jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+  compile localGroovy()
+  compile gradleApi()
+  compile 'com.android.tools.build:gradle:1.5.0'
+  compile "com.amazonaws:aws-java-sdk-s3:$aws_sdk_version"
+}
