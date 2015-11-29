@@ -29,7 +29,7 @@ open class S3ApkUploadTask : DefaultTask() {
     val bucketName = extension.bucketName ?: throw S3ApkUploadException("s3ApkUpload.bucketName cannot be null")
     val noTrailingSlash = extension.path.length > 0 && !extension.path.endsWith("/")
     val targetPath = if (noTrailingSlash) extension.path else "${extension.path}/"
-    val objectKey = "$targetPath${apkFile.name}"
+    val objectKey = "$targetPath/${apkFile.name}"
     val putObjectReq = PutObjectRequest(bucketName, objectKey, apkFile)
 
     try {

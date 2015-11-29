@@ -10,7 +10,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'id.kulina.gradle:kulina-gradle-s3-plugin:1.1'
+    classpath 'id.kulina.gradle:kulina-gradle-s3-plugin:1.1.1'
   }
 }
 
