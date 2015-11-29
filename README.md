@@ -7,10 +7,10 @@ This plugin allows you to upload release APKs to S3 bucket.
 ```groovy
 buildscript {
   repositories {
-    maven { url "https://dl.bintray.com/kulina/maven" }
+    jcenter()
   }
   dependencies {
-    classpath 'id.kulina.gradle:kulina-gradle-s3-plugin:1.0'
+    classpath 'id.kulina.gradle:kulina-gradle-s3-plugin:1.1'
   }
 }
 
