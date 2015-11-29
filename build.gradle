@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = "id.kulina.gradle"
-version = "2.0-SNAPSHOT"
+version = "1.1"
 
 publishing {
   publications {
@@ -27,7 +27,7 @@ publishing {
       from components.java
       groupId 'id.kulina.gradle'
       artifactId 'kulina-gradle-s3-plugin'
-      version '2.0-SNAPSHOT'
+      version '1.1'
     }
   }
 }
@@ -48,7 +48,7 @@ bintray {
     vcsUrl = "https://github.com/KulinaID/kulina-s3-gradle-plugin.git"
 
     version {
-      name = "2.0-SNAPSHOT"
+      name = "1.1"
       gpg {
         sign = true
         passphrase = System.getenv("BINTRAY_GPG_PASSWORD")
